@@ -1,0 +1,43 @@
+---
+import Icon from '../icons/Icon.astro';
+import { ROUTES, productPath } from '../../utils/path';
+
+const links = [
+  { href: ROUTES.home, label: 'Fortnite Cheats' },
+  { href: ROUTES.products, label: 'Fortnite Essential' },
+  { href: '/products/fortnite-hacks/#product-cloud-dma', label: 'Fortnite Cloud DMA' },
+  { href: ROUTES.blog, label: 'Fortnite Cheats Blog' },
+  { href: '/sitemap.xml', label: 'HTML Sitemap' },
+  { href: ROUTES.products, label: 'Fortnite Standard' },
+  { href: productPath('elite'), label: 'Fortnite Elite' },
+  { href: productPath('hwid-spoofer'), label: 'Fortnite HWID Spoofer' },
+  { href: ROUTES.support, label: 'Contact Support' },
+  { href: ROUTES.home, label: 'Home — Undetected Fortnite Cheats' },
+];
+---
+
+<nav class="product-hub-explore rounded-2xl border border-border bg-card p-6 md:p-8" aria-labelledby="product-hub-explore-title">
+  <h2 id="product-hub-explore-title" class="flex items-center gap-2 font-[family-name:var(--font-heading)] text-lg font-bold">
+    <Icon name="navProducts" size={18} class="text-primary" aria-hidden="true" />
+    Explore FortniteCheats
+  </h2>
+  <ul class="mt-6 grid gap-2 sm:grid-cols-2">
+    {
+      links.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class="flex items-center gap-2 rounded-lg py-1.5 text-sm text-muted-foreground transition-colors hover:text-primary"
+          >
+            <Icon name="chevronRight" size={14} class="shrink-0 opacity-70" aria-hidden="true" />
+            {link.label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+  <a href="/sitemap.xml" class="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-primary hover:underline">
+    View full sitemap
+    <Icon name="arrowRight" size={15} />
+  </a>
+</nav>

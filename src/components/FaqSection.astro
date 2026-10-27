@@ -16,7 +16,9 @@ interface Props {
   subtitle?: string;
   titleId?: string;
   showFilters?: boolean;
-  filterTopics?: FaqTopic[];
+  filterTopics?: FaqTopic[] | string[];
+  topicLabels?: Record<string, string>;
+  showIndex?: boolean;
   centered?: boolean;
   /** FAQ column alignment (product pages use left) */
   contentAlign?: 'left' | 'center';
@@ -32,6 +34,8 @@ const {
   titleId = 'faq-heading',
   showFilters = false,
   filterTopics,
+  topicLabels: topicLabelsProp,
+  showIndex = false,
   centered = false,
   contentAlign = 'center',
   id: sectionId,
@@ -41,7 +45,7 @@ const {
 const topicLabels: Record<FaqTopic, string> = {
   all: 'All',
   plans: 'Plans',
-  esp: 'Map hack / ESP',
+  esp: 'Player ESP',
   scripts: 'Scripts',
   safety: 'Safety',
   products: 'Products',
@@ -50,6 +54,7 @@ const topicLabels: Record<FaqTopic, string> = {
 };
 
 const filters = filterTopics ?? (['all', 'plans', 'esp', 'scripts', 'safety', 'products'] as FaqTopic[]);
+const resolvedTopicLabels = topicLabelsProp ?? topicLabels;
 ---
 
 <section
@@ -86,7 +91,7 @@ const filters = filterTopics ?? (['all', 'plans', 'esp', 'scripts', 'safety', 'p
               ]}
               data-faq-filter={topic}
             >
-              {topicLabels[topic]}
+              {resolvedTopicLabels[topic as FaqTopic] ?? topic}
             </button>
           ))}
         </div>
@@ -98,9 +103,17 @@ const filters = filterTopics ?? (['all', 'plans', 'esp', 'scripts', 'safety', 'p
         <div data-faq-topic={faq.topic}>
           <AccordionItem value={`faq-${i}`}>
             <AccordionTrigger class="text-left">
-              <span class="flex items-center gap-2">
-                <Icon name={faq.icon} size={16} class="shrink-0" />
-                <span>{faq.q}</span>
+              <span class="flex w-full items-center gap-3">
+                {
+                  showIndex ? (
+                    <span class="font-[family-name:var(--font-heading)] text-sm font-bold tabular-nums text-primary">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                  ) : (
+                    <Icon name={faq.icon} size={16} class="shrink-0" />
+                  )
+                }
+                <span class="flex-1">{faq.q}</span>
               </span>
             </AccordionTrigger>
             <AccordionContent>

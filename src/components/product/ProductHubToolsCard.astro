@@ -1,0 +1,52 @@
+---
+import Icon from '../icons/Icon.astro';
+import { Button } from '@/components/starwind/button';
+import { Badge } from '@/components/starwind/badge';
+import { ROUTES, productPath } from '../../utils/path';
+
+const features = [
+  { icon: 'sidebarHwid' as const, label: 'HWID spoofer for hardware bans' },
+  { icon: 'compareCloudBackup' as const, label: 'Cloud DMA without a second PC' },
+  { icon: 'sidebarSkin' as const, label: 'Unlock All for local cosmetics' },
+  { icon: 'sidebarUgc' as const, label: 'UGC recovery workflows' },
+];
+---
+
+<article class="product-hub-tools rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
+  <div class="grid gap-8 lg:grid-cols-[1fr_auto] lg:items-center">
+    <div class="space-y-5">
+      <Badge variant="outline" class="gap-1.5 uppercase tracking-wider">
+        <Icon name="navProducts" size={14} aria-hidden="true" />
+        Fortnite products
+      </Badge>
+      <h2 class="font-[family-name:var(--font-heading)] text-2xl font-bold md:text-3xl">
+        Tools that support your cheat setup
+      </h2>
+      <p class="max-w-2xl text-sm leading-relaxed text-muted-foreground md:text-base">
+        Browse HWID spoofing, Unlock All cosmetics, Cloud DMA for single-PC setups, and UGC recovery workflows.
+        Each product is built for Fortnite and Easy Anti-Cheat environments, with setup guides and Discord support
+        when you need a hand.
+      </p>
+      <ul class="grid gap-3 sm:grid-cols-2">
+        {
+          features.map((item) => (
+            <li class="flex items-center gap-2.5 text-sm text-foreground/90">
+              <Icon name={item.icon} size={18} class="shrink-0 text-primary" aria-hidden="true" />
+              {item.label}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="flex flex-col gap-3 sm:min-w-[14rem]">
+      <Button as="a" href={ROUTES.products} variant="primary" class="w-full justify-center rounded-xl">
+        <Icon name="navProducts" size={17} />
+        Browse Products
+      </Button>
+      <Button as="a" href={ROUTES.support} variant="outline" class="w-full justify-center rounded-xl">
+        <Icon name="messageCircle" size={17} />
+        Product help on Discord
+      </Button>
+    </div>
+  </div>
+</article>

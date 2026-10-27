@@ -4,13 +4,16 @@ import sitemap from '@astrojs/sitemap';
 import { sitemapSerialize } from './src/config/sitemap.ts';
 
 export default defineConfig({
-  site: 'https://dotacheats.com',
+  site: 'https://getfortnitecheat.net',
   trailingSlash: 'always',
   redirects: {
-    '/cheats/': '/products/dota-2-cheats/',
-    '/cheats/lite/': '/products/dota-2-cheats/',
-    '/cheats/pro/': '/products/dota-2-cheats/',
-    '/cheats/elite/': '/products/dota-2-cheats/elite/',
+    '/cheats/': '/products/fortnite-hacks/',
+    '/cheats/lite/': '/products/fortnite-hacks/',
+    '/cheats/pro/': '/products/fortnite-hacks/',
+    '/cheats/elite/': '/products/fortnite-hacks/elite/',
+    '/products/dota-2-cheats/': '/products/fortnite-hacks/',
+    '/products/dota-2-cheats/elite/': '/products/fortnite-hacks/elite/',
+    '/products/dota-2-cheats/utilities/': '/products/fortnite-hacks/utilities/',
     '/cheats/compare/': '/blog/dota-2-lite-vs-pro/',
     '/contact/': '/support/',
   },

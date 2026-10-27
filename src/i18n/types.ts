@@ -94,8 +94,17 @@ export interface WhyMetric {
   desc: string;
 }
 
+export interface CloudDmaCopy {
+  eyebrow: string;
+  title: string;
+  description: string;
+  note: string;
+  bullets: string[];
+}
+
 export interface Translations {
   site: SiteConfig;
+  cloudDma: CloudDmaCopy;
   nav: NavLink[];
   hero: {
     status: string;
@@ -108,6 +117,7 @@ export interface Translations {
     modesLabel: string;
     modes: string[];
     metrics: { label: string; strong: string }[];
+    highlights: string[];
   };
   features: {
     eyebrow: string;
@@ -156,6 +166,25 @@ export interface Translations {
     viewAll: string;
     get: string;
     explore: string;
+    cloudDmaBox: {
+      title: string;
+      subtitle: string;
+      description: string;
+      buyNow: string;
+      ctaFeatures: string;
+      ctaLearn: string;
+    };
+    hubCloudDma: {
+      eyebrow: string;
+      title: string;
+      subtitle: string;
+      description: string;
+      seoParagraph: string;
+      buyNow: string;
+      ctaFaq: string;
+      ctaHome: string;
+      highlights: { title: string; desc: string }[];
+    };
     items: ProductCard[];
   };
   blog: {

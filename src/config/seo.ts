@@ -1,10 +1,10 @@
 import { t } from '../i18n';
 import { SITE_DOMAIN as INDEXNOW_HOST_NAME } from './site';
-import { getPageSeoEntry } from './pageSeo';
+import { CLOUD_DMA_SEO_SUFFIX, getPageSeoEntry } from './pageSeo';
 
 export const SITE_ORIGIN = `https://${t.site.domain}`;
 
-export const DEFAULT_OG_IMAGE = '/images/gameplay/dota-2-map-hack.png';
+export const DEFAULT_OG_IMAGE = '/images/gameplay/hero-slide-01.png';
 
 export const GA_MEASUREMENT_ID = import.meta.env.PUBLIC_GA_MEASUREMENT_ID as string | undefined;
 
@@ -38,10 +38,19 @@ export function absoluteAssetUrl(path: string): string {
   return `${SITE_ORIGIN}${normalized}`;
 }
 
+export function ensureCloudDmaInDescription(description: string): string {
+  if (/cloud dma/i.test(description)) return description;
+  const trimmed = description.trim().replace(/\.$/, '');
+  return `${trimmed}. ${CLOUD_DMA_SEO_SUFFIX}`;
+}
+
 export function resolvePageSeo(pathname: string): { title: string; description: string } {
   const entry = getPageSeoEntry(pathname);
   if (entry) return entry;
-  return { title: t.site.title, description: t.site.description };
+  return {
+    title: t.site.title,
+    description: ensureCloudDmaInDescription(t.site.description),
+  };
 }
 
 export function pageTitle(keyword: string, brand = t.site.name): string {

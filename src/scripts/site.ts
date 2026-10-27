@@ -65,6 +65,23 @@ function initSkipLink() {
   });
 }
 
+function initFaqJumpLinks() {
+  document.querySelectorAll<HTMLElement>('[data-faq-jump]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const topic = link.getAttribute('data-faq-jump');
+      if (!topic) return;
+      const targetId = link.getAttribute('href')?.replace(/^#/, '');
+      if (!targetId) return;
+      const section = document.getElementById(targetId)?.closest('[data-faq-section]');
+      const chip = section?.querySelector<HTMLButtonElement>(`[data-faq-filter="${topic}"]`);
+      if (!chip) return;
+      event.preventDefault();
+      chip.click();
+      section?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+}
+
 function initFaqFilters() {
   document.querySelectorAll('[data-faq-filters]').forEach((container) => {
     const section = container.closest('[data-faq-section]');
@@ -103,6 +120,7 @@ function initThemeMetaColor() {
 
 function bootSite() {
   initFonts();
+  initFaqJumpLinks();
   initFaqFilters();
   initNavHighlight();
   initInPageScroll();

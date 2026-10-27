@@ -1,0 +1,96 @@
+---
+import { t } from '../../i18n';
+import Icon from '../icons/Icon.astro';
+import { Button } from '@/components/starwind/button';
+import { Badge } from '@/components/starwind/badge';
+import { checkoutExternalUrl } from '../../config/checkout';
+
+const cloud = t.cloudDma;
+const hub = t.products.hubCloudDma;
+---
+
+<article
+  id="product-cloud-dma"
+  class="product-hub-cloud-dma mt-12 md:mt-14"
+  aria-labelledby="product-hub-cloud-dma-title"
+>
+  <div class="product-hub-cloud-dma__panel">
+    <div class="product-hub-cloud-dma__glow" aria-hidden="true"></div>
+    <div class="product-hub-cloud-dma__inner">
+      <div class="grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-start lg:gap-12">
+        <div class="space-y-5 md:space-y-6">
+          <Badge variant="primary" appearance="soft" size="sm" class="gap-1.5">
+            <Icon name="compareCloudBackup" size={14} aria-hidden="true" />
+            {hub.eyebrow}
+          </Badge>
+          <div class="space-y-3">
+            <h2
+              id="product-hub-cloud-dma-title"
+              class="font-[family-name:var(--font-heading)] text-3xl font-bold tracking-tight md:text-4xl lg:text-[2.65rem] lg:leading-tight"
+            >
+              {hub.title}
+            </h2>
+            <p class="text-base font-medium text-primary md:text-lg">{hub.subtitle}</p>
+          </div>
+          <p class="max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg md:leading-relaxed">
+            {hub.description}
+          </p>
+          <p class="max-w-2xl text-sm leading-relaxed text-muted-foreground/90 md:text-base">
+            {hub.seoParagraph}
+          </p>
+          <p class="text-xs leading-relaxed text-muted-foreground/80">{cloud.note}</p>
+          <div class="flex flex-wrap gap-3 pt-2">
+            <Button
+              as="a"
+              href={checkoutExternalUrl('dota2')}
+              variant="primary"
+              size="default"
+              class="rounded-xl"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {hub.buyNow}
+              <Icon name="arrowRight" size={16} />
+            </Button>
+            <Button
+              as="a"
+              href="#product-faq"
+              variant="outline"
+              size="default"
+              class="rounded-xl"
+              data-faq-jump="cloud-dma"
+            >
+              {hub.ctaFaq}
+              <Icon name="arrowRight" size={16} />
+            </Button>
+            <Button as="a" href="/#cloud-dma" variant="outline" size="default" class="rounded-xl">
+              {hub.ctaHome}
+            </Button>
+          </div>
+        </div>
+        <div class="space-y-4">
+          <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
+            {
+              hub.highlights.map((item) => (
+                <li class="product-hub-cloud-dma__highlight">
+                  <p class="font-semibold text-foreground">{item.title}</p>
+                  <p class="mt-1 text-sm leading-snug text-muted-foreground">{item.desc}</p>
+                </li>
+              ))
+            }
+          </ul>
+          <ul class="grid gap-2.5 border-t border-border/60 pt-4">
+            {
+              cloud.bullets.map((item) => (
+                <li class="flex gap-2.5 text-sm">
+                  <Icon name="check" size={16} class="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
+                  <span class="leading-snug text-foreground/90">{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</article>

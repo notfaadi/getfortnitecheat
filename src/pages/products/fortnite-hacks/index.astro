@@ -9,8 +9,19 @@ import { breadcrumbSchema, collectionPageSchema, itemListSchema } from '../../..
 import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import CatalogCard from '../../../components/CatalogCard.astro';
 import { productPath } from '../../../utils/path';
+import FaqSection from '../../../components/FaqSection.astro';
+import ProductHubToolsCard from '../../../components/product/ProductHubToolsCard.astro';
+import ProductHubExploreCard from '../../../components/product/ProductHubExploreCard.astro';
+import ProductHubCloudDmaSection from '../../../components/product/ProductHubCloudDmaSection.astro';
+import {
+  productHubFaqs,
+  PRODUCT_FAQ_FILTER_TOPICS,
+  PRODUCT_FAQ_TOPIC_LABELS,
+} from '../../../data/productFaqs';
+import { faqPageSchema } from '../../../utils/schema';
+import type { SiteFaqItem } from '../../../data/faq';
 
-const seo = resolvePageSeo('/products/dota-2-cheats/');
+const seo = resolvePageSeo('/products/fortnite-hacks/');
 const breadcrumbs = [
   { name: 'Home', path: '/' },
   { name: 'Products', path: productHub.path },
@@ -47,6 +58,13 @@ function cardLabel(product: (typeof productPages)[number]) {
         url: productPath(product.slug),
       })),
     ),
+    faqPageSchema(
+      productHubFaqs.map((f, i) => ({
+        num: String(i + 1).padStart(2, '0'),
+        q: f.q,
+        a: f.a,
+      })),
+    ),
   ]}
 >
   <section class="py-8 md:py-12">
@@ -75,6 +93,30 @@ function cardLabel(product: (typeof productPages)[number]) {
           />
         ))}
       </div>
+
+      <ProductHubCloudDmaSection />
+    </div>
+  </section>
+
+  <FaqSection
+    id="product-faq"
+    class="product-hub-faq border-t border-border bg-muted/15"
+    eyebrow="FAQ"
+    title="Fortnite product FAQ"
+    subtitle="Fortnite Cloud DMA, Fortnite HWID Spoofer, Fortnite Unlock All, and UGC."
+    titleId="product-faq-heading"
+    items={productHubFaqs as unknown as SiteFaqItem[]}
+    showFilters
+    filterTopics={[...PRODUCT_FAQ_FILTER_TOPICS]}
+    topicLabels={PRODUCT_FAQ_TOPIC_LABELS}
+    showIndex
+    contentAlign="left"
+  />
+
+  <section class="border-t border-border py-12 md:py-16">
+    <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5">
+      <ProductHubToolsCard />
+      <ProductHubExploreCard />
     </div>
   </section>
 </BaseLayout>

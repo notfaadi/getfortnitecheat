@@ -13,8 +13,13 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/starwind/carousel';
+import Icon from './icons/Icon.astro';
+import { Button } from '@/components/starwind/button';
+import { Badge } from '@/components/starwind/badge';
+import { checkoutExternalUrl } from '../config/checkout';
 
 const s = t.products;
+const cloud = t.cloudDma;
 
 function cardIcon(product: (typeof productPages)[number]) {
   if (product.kind === 'tier') {
@@ -72,6 +77,62 @@ function cardLabel(product: (typeof productPages)[number]) {
         </div>
       </Carousel>
     </div>
+
+    <article
+      class="products-cloud-dma mt-12 overflow-hidden rounded-2xl border border-primary/30 bg-gradient-to-br from-primary/10 via-card to-card shadow-md md:mt-14"
+      aria-labelledby="products-cloud-dma-title"
+    >
+      <div class="grid gap-8 p-6 md:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center lg:gap-10">
+        <div class="space-y-4">
+          <Badge variant="primary" appearance="soft" size="sm" class="gap-1.5">
+            <Icon name="compareCloudBackup" size={14} aria-hidden="true" />
+            {cloud.eyebrow}
+          </Badge>
+          <div class="space-y-2">
+            <h3
+              id="products-cloud-dma-title"
+              class="font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight md:text-3xl"
+            >
+              {s.cloudDmaBox.title}
+            </h3>
+            <p class="text-sm font-medium text-primary md:text-base">{s.cloudDmaBox.subtitle}</p>
+          </div>
+          <p class="text-sm leading-relaxed text-muted-foreground md:text-base">{s.cloudDmaBox.description}</p>
+          <p class="text-xs leading-relaxed text-muted-foreground/90">{cloud.note}</p>
+          <div class="flex flex-wrap gap-3 pt-1">
+            <Button
+              as="a"
+              href={checkoutExternalUrl('dota2')}
+              variant="primary"
+              size="sm"
+              class="rounded-xl"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {s.cloudDmaBox.buyNow}
+              <Icon name="arrowRight" size={16} />
+            </Button>
+            <Button as="a" href="#features" data-scroll-target="features" variant="primary" size="sm" class="rounded-xl">
+              {s.cloudDmaBox.ctaFeatures}
+              <Icon name="arrowRight" size={16} />
+            </Button>
+            <Button as="a" href="#cloud-dma" data-scroll-target="cloud-dma" variant="outline" size="sm" class="rounded-xl">
+              {s.cloudDmaBox.ctaLearn}
+            </Button>
+          </div>
+        </div>
+        <ul class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
+          {
+            cloud.bullets.map((item) => (
+              <li class="flex gap-2.5 rounded-xl border border-border/70 bg-background/50 px-3.5 py-3 text-sm">
+                <Icon name="check" size={16} class="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
+                <span class="leading-snug text-foreground/90">{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </article>
   </div>
 </section>
 

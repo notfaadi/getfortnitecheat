@@ -1,13 +1,31 @@
-/** Checkout destinations keyed by internal product id (no affiliate codes). */
+/** Zadeyo FDI checkout wrapper (affiliate / deep-link). */
+export const ZADEYO_FDI_CODE = 'FDI';
+
+/** Destination paths on zadeyo.com for each module. */
+export const ZADEYO_PRODUCT_PATHS = {
+  fortnite: '/products/fortnite',
+  skinChanger: '/products/skin-changer',
+  hwidSpoofer: '/products/hwid-spoofer',
+  ugc: '/products/ugc',
+};
+
+export function zadeyoCheckoutUrl(zadeyoProductPath) {
+  const to = zadeyoProductPath.startsWith('/') ? zadeyoProductPath : `/${zadeyoProductPath}`;
+  return `https://zadeyo.com/go/${ZADEYO_FDI_CODE}?to=${encodeURIComponent(to)}`;
+}
+
+/** Checkout destinations keyed by internal product id. */
 export const CHECKOUT_URLS = {
-  dota2: 'https://zadeyo.com/products/dota-2',
-  skinChanger: 'https://zadeyo.com/products/skin-changer',
-  hwidSpoofer: 'https://zadeyo.com/products/hwid-spoofer',
-  ugc: 'https://zadeyo.com/products/ugc',
+  dota2: zadeyoCheckoutUrl(ZADEYO_PRODUCT_PATHS.fortnite),
+  skinChanger: zadeyoCheckoutUrl(ZADEYO_PRODUCT_PATHS.skinChanger),
+  hwidSpoofer: zadeyoCheckoutUrl(ZADEYO_PRODUCT_PATHS.hwidSpoofer),
+  ugc: zadeyoCheckoutUrl(ZADEYO_PRODUCT_PATHS.ugc),
 };
 
 /** Checkout paths → external product URLs (used by Node serve + Astro middleware). */
 export const CHECKOUT_PATH_REDIRECTS = new Map([
+  ['/go/fortnite', CHECKOUT_URLS.dota2],
+  ['/go/fortnite/', CHECKOUT_URLS.dota2],
   ['/go/dota-2', CHECKOUT_URLS.dota2],
   ['/go/dota-2/', CHECKOUT_URLS.dota2],
   ['/go/skin-changer', CHECKOUT_URLS.skinChanger],

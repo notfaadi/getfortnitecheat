@@ -1,0 +1,37 @@
+---
+import { t } from '../i18n';
+import Icon from './icons/Icon.astro';
+import { Badge } from '@/components/starwind/badge';
+---
+
+<section
+  class="border-t border-border bg-gradient-to-b from-primary/5 to-muted/20 py-10 md:py-12"
+  aria-labelledby="cloud-dma-title"
+  id="cloud-dma"
+>
+  <div class="mx-auto max-w-6xl px-5">
+    <div class="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between lg:gap-10">
+      <div class="max-w-xl space-y-3">
+        <Badge variant="primary" appearance="soft" size="sm" class="gap-1.5">
+          <Icon name="compareCloudBackup" size={14} aria-hidden="true" />
+          {t.cloudDma.eyebrow}
+        </Badge>
+        <h2 id="cloud-dma-title" class="font-[family-name:var(--font-heading)] text-2xl font-bold tracking-tight md:text-3xl">
+          {t.cloudDma.title}
+        </h2>
+        <p class="text-sm leading-relaxed text-muted-foreground md:text-base">{t.cloudDma.description}</p>
+        <p class="text-xs text-muted-foreground/90">{t.cloudDma.note}</p>
+      </div>
+      <ul class="grid flex-1 gap-3 sm:grid-cols-2 lg:max-w-2xl">
+        {
+          t.cloudDma.bullets.map((item) => (
+            <li class="flex gap-2.5 rounded-xl border border-border/80 bg-background/60 px-3.5 py-3 text-sm shadow-xs">
+              <Icon name="dmaHardware" size={18} class="mt-0.5 shrink-0 text-primary" aria-hidden="true" />
+              <span>{item}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

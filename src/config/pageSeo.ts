@@ -1,6 +1,5 @@
 /**
  * Central titles/descriptions for high-traffic routes.
- * After Search Console shows impressions, edit the matching path here and redeploy.
  */
 
 export interface PageSeoEntry {
@@ -8,62 +7,64 @@ export interface PageSeoEntry {
   description: string;
 }
 
+/** Appended to meta descriptions site-wide when not already present. */
+export const CLOUD_DMA_SEO_SUFFIX = 'Cloud DMA on AWS included with every tier.';
+
+function withCloudDma(description: string): string {
+  if (/cloud dma/i.test(description)) return description;
+  const trimmed = description.trim().replace(/\.$/, '');
+  return `${trimmed}. ${CLOUD_DMA_SEO_SUFFIX}`;
+}
+
+function seo(title: string, description: string): PageSeoEntry {
+  return { title, description: withCloudDma(description) };
+}
+
 export const PAGE_SEO: Record<string, PageSeoEntry> = {
-  '/': {
-    // gscNote: Keep primary keyword "dota 2 cheats" near front; trim if title truncates in SERP.
-    title: 'Dota 2 Cheats & Hacks | Scripts, Map Hack & ESP',
-    description:
-      'Dota 2 cheats for PC ranked: scripts, map hack, zoom hack, and skin changer tiers updated every patch at dotacheats.com.',
-  },
-  '/products/dota-2-cheats/': {
-    title: 'Dota 2 Elite Cheats & Utility Products',
-    description:
-      'Elite dota 2 cheats plus HWID spoofer, UGC tools, and Skin Changer utilities for Steam ranked on dotacheats.com.',
-  },
-  '/products/dota-2-cheats/elite/': {
-    title: 'Dota 2 Elite Cheats | Bots & Full Map Hack',
-    description:
-      'Elite tier: auto farm bot, kill steal, skin changer, full map hack suite, and priority patch delivery.',
-  },
-  '/products/dota-2-cheats/utilities/': {
-    title: 'Dota 2 Utilities | HWID, UGC & Skin Changer',
-    description:
-      'Choose HWID Spoofer, UGC, or Skin Changer—when each utility fits and links to full product pages.',
-  },
-  '/blog/': {
-    title: 'Dota 2 Cheats Guides & Patch Notes',
-    description:
-      'Setup guides, Lite vs Pro comparisons, VAC patch checklists, and ranked config tips for dota cheats.',
-  },
-  '/forum/': {
-    title: 'Dota 2 Community Forum | DotaCheats',
-    description: 'Join Dota players to discuss heroes, builds, patch changes, guides, and community moments.',
-  },
-  '/faq/': {
-    title: 'FAQ | Dota 2 Cheats, Products & Setup',
-    description:
-      'Answers on cheat tiers, map hack, scripts, HWID tools, checkout, and blog guides at dotacheats.com.',
-  },
-  '/terms/': {
-    title: 'Terms & Conditions | DotaCheats',
-    description:
-      'Purchase terms, license use, and refund policy for DotaCheats products sold through dotacheats.com.',
-  },
-  '/privacy/': {
-    title: 'Privacy Policy | DotaCheats',
-    description:
-      'How dotacheats.com uses analytics, cookies, and contact data when you browse or request support.',
-  },
-  '/about/': {
-    title: 'About DotaCheats',
-    description:
-      'What DotaCheats publishes: Dota 2 cheat tiers, utilities, guides, and status notes at dotacheats.com.',
-  },
-  '/support/': {
-    title: 'Support | DotaCheats',
-    description:
-      'Get help with loader setup, HWID, and checkout for Dota 2 cheat tiers and utilities.',
-  },
+  '/': seo(
+    'Fortnite Cheats and Hacks | Aimbot, ESP & Cloud DMA',
+    'Private Fortnite cheats and hacks with aimbot, ESP, and Cloud DMA on AWS. Keys instantly after checkout—updated after every patch at getfortnitecheat.net.',
+  ),
+  '/products/fortnite-hacks/': seo(
+    'Fortnite Cheats & Hacks FAQ | Cloud DMA & HWID Spoofer',
+    '101 product FAQs: undetected-style Fortnite cheats 2026, Cloud DMA on AWS aimbot & ESP presets, HWID spoofer for EAC, ranked Battle Royale setup—getfortnitecheat.net.',
+  ),
+  '/products/fortnite-hacks/elite/': seo(
+    'Fortnite Elite Hacks | Loot Assist & Full ESP',
+    'Elite tier: loot farmer, auto finish, skin unlocker, full ESP suite, priority patches, and Cloud DMA on AWS.',
+  ),
+  '/products/fortnite-hacks/utilities/': seo(
+    'Fortnite Utilities | HWID, UGC & Skin Unlocker',
+    'HWID Spoofer, UGC, and Skin Unlocker utilities—pair with Cloud DMA AWS cheat profiles from the operator portal.',
+  ),
+  '/blog/': seo(
+    'Fortnite Hacks Guides & Season Notes',
+    'Setup guides, Lite vs Pro comparisons, EAC patch checklists, and Cloud DMA AWS config tips for Fortnite hacks.',
+  ),
+  '/forum/': seo(
+    'Fortnite Community Forum | Fortnite Hacks',
+    'Discuss loadouts, Cloud DMA presets, season changes, and guides with the Fortnite Cheats community.',
+  ),
+  '/faq/': seo(
+    'FAQ | Fortnite Hacks, Products & Setup',
+    'Answers on hack tiers, ESP, aimbot, Cloud DMA on AWS, HWID tools, checkout, and setup.',
+  ),
+  '/terms/': seo(
+    'Terms & Conditions | Fortnite Hacks',
+    'Purchase terms, license use, and refund policy for Fortnite Cheats products sold through checkout.',
+  ),
+  '/privacy/': seo(
+    'Privacy Policy | Fortnite Hacks',
+    'How Fortnite Cheats uses analytics, cookies, and contact data when you browse or request support.',
+  ),
+  '/about/': seo(
+    'About Fortnite Hacks',
+    'What Fortnite Cheats publishes: cheat tiers, Cloud DMA on AWS delivery, utilities, guides, and live status.',
+  ),
+  '/support/': seo(
+    'Support | Fortnite Hacks',
+    'Help with loader setup, Cloud DMA AWS sync, HWID, and checkout for Fortnite hack tiers and utilities.',
+  ),
 };
 
 export function normalizeSeoPath(pathname: string): string {

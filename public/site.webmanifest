@@ -1,7 +1,7 @@
 {
-  "name": "DotaCheats",
-  "short_name": "DotaCheats",
-  "description": "Dota 2 cheats with scripts, map hack, zoom hack and skin changer for PC.",
+  "name": "Fortnite Cheats",
+  "short_name": "Fortnite Cheats",
+  "description": "Fortnite cheats with scripts, ESP, FOV extender and skin unlocker for PC.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

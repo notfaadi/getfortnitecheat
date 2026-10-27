@@ -1,10 +1,12 @@
 /** Blog index topic filters + Starwind sort select. */
-export function initBlogIndexFilters(emptyMessage: string) {
+export function initBlogIndexFilters() {
   const grid = document.getElementById('blog-grid');
   const emptyEl = document.getElementById('blog-empty');
   const sortRoot = document.getElementById('blog-sort-select');
+  const featuredWrap = document.querySelector<HTMLElement>('[data-blog-featured]');
   if (!grid) return;
 
+  const emptyMessage = emptyEl?.dataset.emptyMessage ?? 'No articles match this filter.';
   const filters = document.querySelectorAll<HTMLButtonElement>('[data-blog-filter]');
 
   const cards = () => [...grid.querySelectorAll<HTMLElement>('[data-blog-card]')];
@@ -22,12 +24,6 @@ export function initBlogIndexFilters(emptyMessage: string) {
     if (fromAttr) return fromAttr;
     const input = sortRoot?.querySelector<HTMLInputElement>('[data-sw-select-input]');
     return input?.value || 'newest';
-  };
-
-  const isBlogSortEvent = (event: Event) => {
-    const root = getSortSelectRoot();
-    if (!root || !sortRoot) return false;
-    return event.target === root || root.contains(event.target as Node);
   };
 
   const compareCards = (a: HTMLElement, b: HTMLElement, sort: string) => {
@@ -56,28 +52,55 @@ export function initBlogIndexFilters(emptyMessage: string) {
       if (match) visibleCount += 1;
     });
 
+    if (featuredWrap) {
+      const featuredMatch = tag === 'all' || featuredWrap.getAttribute('data-tag') === tag;
+      featuredWrap.classList.toggle('hidden', !featuredMatch);
+    }
+
     if (emptyEl) {
       emptyEl.classList.toggle('hidden', visibleCount > 0);
       emptyEl.textContent = emptyMessage;
     }
   };
 
-  filters.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      filters.forEach((b) => b.setAttribute('aria-pressed', 'false'));
-      btn.setAttribute('aria-pressed', 'true');
-      apply();
+  const setActiveFilter = (value: string) => {
+    filters.forEach((btn) => {
+      const isActive = btn.getAttribute('data-blog-filter') === value;
+      btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
-  });
-
-  const onSortChange = (event: Event) => {
-    if (!isBlogSortEvent(event)) return;
     apply();
   };
 
-  document.addEventListener('starwind:value-change', onSortChange);
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const value = btn.getAttribute('data-blog-filter') ?? 'all';
+      setActiveFilter(value);
 
-  // Starwind select hydrates after first paint — re-apply once ready.
-  requestAnimationFrame(apply);
-  window.setTimeout(apply, 0);
+      const url = new URL(window.location.href);
+      if (value === 'all') url.searchParams.delete('tag');
+      else url.searchParams.set('tag', value);
+      window.history.replaceState({}, '', url);
+    });
+  });
+
+  const onSortChange = () => apply();
+
+  if (sortRoot) {
+    sortRoot.addEventListener('starwind:value-change', onSortChange);
+  }
+  document.addEventListener('starwind:value-change', onSortChange, true);
+
+  const selectRoot = getSortSelectRoot();
+  if (selectRoot) {
+    const observer = new MutationObserver(onSortChange);
+    observer.observe(selectRoot, { attributes: true, attributeFilter: ['data-value'] });
+  }
+
+  const tagFromUrl = new URLSearchParams(window.location.search).get('tag');
+  if (tagFromUrl && document.querySelector(`[data-blog-filter="${tagFromUrl}"]`)) {
+    setActiveFilter(tagFromUrl);
+  } else {
+    requestAnimationFrame(apply);
+    window.setTimeout(apply, 0);
+  }
 }
